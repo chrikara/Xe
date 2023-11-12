@@ -46,8 +46,6 @@ class XeViewModelTest {
     @Test
     fun `User enters title, state title is updated`() {
         viewModel.onEvent(XeEvent.OnChangeTitleText(title))
-        println(viewModel.state)
-
 
 
         assertThat(viewModel.state.title).isNotEmpty()
@@ -122,6 +120,7 @@ class XeViewModelTest {
         }
         viewModel.onEvent(XeEvent.OnLocationItemClicked(repository.items[0]))
         viewModel.onEvent(XeEvent.OnSubmitClicked)
+
 
         assertThat(viewModel.state.isDialogShown).isTrue()
     }

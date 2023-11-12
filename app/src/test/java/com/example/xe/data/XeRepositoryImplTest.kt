@@ -36,7 +36,6 @@ class XeRepositoryImplTest {
             MockResponse().setBody(JSON_SAMPLE_FROM_XE)
         )
         val result = xeRepositoryImpl.searchProducts("")
-        println(result)
 
         assertThat(result.isSuccess).isTrue()
     }
@@ -47,7 +46,6 @@ class XeRepositoryImplTest {
             MockResponse().setResponseCode(404)
         )
         val result = xeRepositoryImpl.searchProducts("")
-        println(result)
 
         assertThat(result.isFailure).isTrue()
 

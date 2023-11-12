@@ -1,5 +1,6 @@
 package com.example.xe.ui.xe
 
+
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
@@ -55,6 +56,7 @@ fun XeScreen(
     val spacing = LocalSpacing.current
     val context = LocalContext.current
     val focusRequester = remember { FocusRequester() }
+    val isMobile = windowType == WindowType.Mobile
 
 
     if(state.isDialogShown){
@@ -63,6 +65,7 @@ fun XeScreen(
             onDismissRequest = {onEvent(XeEvent.OnDialogDismissClicked)},
             dialogTitle = "Success" ,
             dialogText = state.jsonAdString ,
+            windowType = windowType
         )
     }
 
@@ -84,7 +87,7 @@ fun XeScreen(
         item {
             TextViewXe(
                 text = stringResource(R.string.new_property_classified),
-                style = if(windowType == WindowType.Mobile) MaterialTheme.typography.titleLarge else MaterialTheme.typography.headlineLarge,
+                style = if(isMobile) MaterialTheme.typography.titleLarge else MaterialTheme.typography.headlineLarge,
                 windowType = windowType
             )
 
@@ -101,7 +104,8 @@ fun XeScreen(
                 trailingIcon = if(state.title.isNotBlank()) trailingIconCheck else null,
                 textError = state.errorTitleText,
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag("Title"),
                 onValueChange = {onEvent(XeEvent.OnChangeTitleText(it))}
             )
 
@@ -130,7 +134,7 @@ fun XeScreen(
 
                 LazyColumn(
                     modifier = Modifier
-                        .height(if (windowType == WindowType.Mobile) 150.dp else 250.dp)
+                        .height(if (isMobile) 150.dp else 250.dp)
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(5.dp))
                         .background(MaterialTheme.colorScheme.onSurface),
@@ -208,7 +212,7 @@ fun XeScreen(
                         .fillMaxWidth()
                         .testTag("Description"),
                     onValueChange = {onEvent(XeEvent.OnChangeDescriptionText(it))},
-                    minLines = if(windowType == WindowType.Mobile) 3 else 6,
+                    minLines = if(isMobile) 3 else 6,
                     windowType = windowType,
                     singleLine = false
                     )

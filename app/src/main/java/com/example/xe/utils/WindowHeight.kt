@@ -22,7 +22,6 @@ fun rememberWindowSize(): WindowHeight {
     val screenHeight by remember(key1 = configuration) {
         mutableIntStateOf(configuration.screenHeightDp)
     }
-    println(screenHeight)
 
     return WindowHeight(
         type = getScreenHeight(screenHeight),
@@ -30,7 +29,7 @@ fun rememberWindowSize(): WindowHeight {
 }
 
 fun getScreenHeight(height: Int): WindowType = when {
-    height < 720 -> WindowType.Mobile
+    height < 780 -> WindowType.Mobile
     else -> WindowType.Expanded
 }
 

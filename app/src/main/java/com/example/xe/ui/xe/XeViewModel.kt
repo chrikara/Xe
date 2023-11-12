@@ -141,6 +141,7 @@ class XeViewModel @Inject constructor(
             placeId = "",
             hasErrorLocationTextField = false,
             hasErrorTitleTextField = false,
+            isLocationValid = false,
             listFromApi = emptyList(),
 
 

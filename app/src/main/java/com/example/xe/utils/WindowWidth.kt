@@ -13,7 +13,7 @@ data class WindowWidth(
 
 sealed class WindowType{
     data object Mobile : WindowType()
-    data object Tablet : WindowType()
+    data object Expanded : WindowType()
 }
 
 @Composable
@@ -31,6 +31,6 @@ fun rememberWindowSize(): WindowWidth {
 
 fun getScreenWidth(width: Int): WindowType = when {
     width < 600 -> WindowType.Mobile
-    else -> WindowType.Tablet
+    else -> WindowType.Expanded
 }
 

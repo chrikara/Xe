@@ -30,6 +30,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.xe.R
 import com.example.xe.ui.theme.LocalSpacing
+import com.example.xe.ui.xe.components.LocationItemXe
 import com.example.xe.ui.xe.components.TextFieldXe
 import com.example.xe.ui.xe.components.TextViewXe
 import com.example.xe.ui.xe.components.trailingIconCheck
@@ -109,7 +110,6 @@ fun XeScreen(
 
                     ){
                     items(state.listFromApi){
-                        /*
                           LocationItemXe(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -117,12 +117,9 @@ fun XeScreen(
                                 .testTag("LocationItem"),
                             text = "${it.mainText}, ${it.secondaryText}",
                             onClick = {
-                                onEvent(XeEvent.OnLocationItemClicked(searchDto = it))
 
                             }
                         )
-                         */
-
                     }
                 }
             }

@@ -6,7 +6,7 @@ sealed class XeEvent {
 
 
     data class OnChangeTitleText(val text : String) : XeEvent()
-    data class OnChangeLocationText(val text : String) : XeEvent()
+    data class OnChangeLocationText(val query : String) : XeEvent()
     data class OnChangePriceText(val text : String) : XeEvent()
     data class OnChangeDescriptionText(val text : String) : XeEvent()
 

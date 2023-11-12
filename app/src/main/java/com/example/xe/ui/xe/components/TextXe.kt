@@ -11,7 +11,7 @@ import com.example.xe.utils.WindowType
 
 
 @Composable
-fun TextViewXE(
+fun TextViewXe(
     modifier : Modifier = Modifier,
     text : String,
     windowType : WindowType,

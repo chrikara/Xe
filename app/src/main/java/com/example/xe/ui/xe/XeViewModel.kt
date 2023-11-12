@@ -26,12 +26,34 @@ class XeViewModel @Inject constructor(
                 )
             }
 
-            is XeEvent.OnChangeLocationText -> TODO()
-            is XeEvent.OnChangePriceText -> TODO()
-            is XeEvent.OnChangeDescriptionText -> TODO()
+            is XeEvent.OnChangeLocationText -> {
+                state = state.copy(
+                    location = event.text
+                )
+            }
+            is XeEvent.OnChangePriceText -> {
+                state = state.copy(
+                    price = event.text
+                )
+            }
+            is XeEvent.OnChangeDescriptionText -> {
+                state = state.copy(
+                    description = event.text
+                )
+            }
             XeEvent.OnClearClicked -> TODO()
             XeEvent.OnDialogDismissClicked -> TODO()
             is XeEvent.OnSubmitClicked -> TODO()
         }
     }
+
+
+
+
+
+
+
+
+
+
 }

@@ -19,6 +19,7 @@ data class XeState(
     val isLocationValid : Boolean = false,
     val isLoading : Boolean = false,
 
-    val isDialogShown : Boolean = false
+    val isDialogShown : Boolean = false,
+    val jsonAdString : String = "",
 
     )

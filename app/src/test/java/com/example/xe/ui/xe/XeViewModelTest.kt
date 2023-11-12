@@ -136,6 +136,9 @@ class XeViewModelTest {
         viewModel.onEvent(XeEvent.OnSubmitClicked)
 
         assertThat(viewModel.state.isDialogShown).isFalse()
+        assertThat(viewModel.state.title).isEmpty()
+        assertThat(viewModel.state.hasErrorTitleTextField).isTrue()
+        assertThat(viewModel.state.errorTitleText).isNotEmpty()
     }
 
     @ParameterizedTest

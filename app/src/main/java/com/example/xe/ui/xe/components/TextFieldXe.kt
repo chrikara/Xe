@@ -38,7 +38,7 @@ fun TextFieldXe(
     TextField(
         value = value,
         modifier = modifier,
-        textStyle = if(windowType == WindowType.Mobile) LocalTextStyle.current else MaterialTheme.typography.headlineMedium,
+        textStyle = if(windowType == WindowType.Mobile) LocalTextStyle.current else MaterialTheme.typography.titleLarge,
         onValueChange = onValueChange,
         placeholder = {
             Box(

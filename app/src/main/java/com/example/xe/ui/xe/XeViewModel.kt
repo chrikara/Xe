@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.xe.domain.XeRepository
+import com.example.xe.domain.model.Ad
 import com.example.xe.domain.usecase.FilterDigits
 import com.example.xe.domain.usecase.ValidateInputs
 import com.example.xe.utils.DELAY
@@ -15,6 +16,8 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,11 +31,6 @@ class XeViewModel @Inject constructor(
 
     var state by mutableStateOf<XeState>(XeState())
         private set
-
-    private var job : Job? = null
-
-    private val _uiEvent = Channel<UiEvent>()
-    val uiEvent = _uiEvent.receiveAsFlow()
 
     fun onEvent(event: XeEvent) {
         when (event) {
@@ -61,6 +59,14 @@ class XeViewModel @Inject constructor(
 
             }
 
+            is XeEvent.OnLocationItemClicked -> {
+                state = state.copy(
+                    location = "${event.searchDto.mainText}, ${event.searchDto.secondaryText}",
+                    placeId = event.searchDto.placeId,
+                    isLocationValid = true,
+                    listFromApi = emptyList()
+                )
+            }
             is XeEvent.OnChangePriceText -> {
                 state = state.copy(
                     price = filterDigits(event.text)
@@ -73,10 +79,6 @@ class XeViewModel @Inject constructor(
                 )
             }
 
-            XeEvent.OnClearClicked -> {
-                clearXeFields()
-            }
-            XeEvent.OnDialogDismissClicked -> TODO()
             is XeEvent.OnSubmitClicked -> {
                 val result = validateInputs(
                     title = state.title,
@@ -93,7 +95,7 @@ class XeViewModel @Inject constructor(
                     }
                     ValidateInputs.Result.ErrorEmptyTitle -> {
                         state = state.copy(
-                            errorLocationText = "Title should not be empty",
+                            errorTitleText = "Title should not be empty",
                             hasErrorTitleTextField = true
                         )
                     }
@@ -105,23 +107,30 @@ class XeViewModel @Inject constructor(
                     }
                     ValidateInputs.Result.Success -> {
                         state = state.copy(
-                            isDialogShown = true
+                            jsonAdString = convertAdToJson(),
+                            isDialogShown = true,
+                            isLocationValid = false
                         )
+                        clearXeFields()
                     }
                 }
 
             }
 
+            XeEvent.OnClearClicked -> {
+                clearXeFields()
+            }
+            XeEvent.OnDialogDismissClicked -> {
+                state = state.copy(isDialogShown = false)
 
-            is XeEvent.OnLocationItemClicked -> {
-                state = state.copy(
-                    location = "${event.searchDto.mainText}, ${event.searchDto.secondaryText}",
-                    isLocationValid = true,
-                    listFromApi = emptyList()
-                )
             }
         }
     }
+
+    private var job : Job? = null
+    private val _uiEvent = Channel<UiEvent>()
+
+    val uiEvent = _uiEvent.receiveAsFlow()
 
     private fun clearXeFields() {
         state = state.copy(
@@ -157,10 +166,25 @@ class XeViewModel @Inject constructor(
                 }
         }
     }
+    private fun convertAdToJson() : String{
+
+        return Json.encodeToString(
+            Ad(
+                title = state.title,
+                location = state.location,
+                placeId = state.placeId,
+                price = state.price,
+                description = state.description
+            )
+        )
+
+    }
 
     sealed class UiEvent(){
         data class ShowToast(val message : String) : UiEvent()
     }
+
+
 
 
 }

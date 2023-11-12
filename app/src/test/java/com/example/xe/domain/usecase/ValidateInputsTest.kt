@@ -35,7 +35,6 @@ internal class ValidateInputsTest{
         assertThat(listOfValidateInputs[count++]).isEqualTo(ValidateInputs.Result.ErrorInvalidLocation)
         assertThat(listOfValidateInputs[count++]).isEqualTo(ValidateInputs.Result.ErrorEmptyTitle)
         assertThat(listOfValidateInputs[count++]).isEqualTo(ValidateInputs.Result.Success)
-        assertThat(listOfValidateInputs[0]).isDataClassEqualTo(ValidateInputs.Result.Success)
 
 
 

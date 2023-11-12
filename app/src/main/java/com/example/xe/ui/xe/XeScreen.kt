@@ -25,20 +25,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.xe.R
+import com.example.xe.ui.theme.GreenXE
 import com.example.xe.ui.theme.LocalSpacing
+import com.example.xe.ui.xe.components.ButtonXe
+import com.example.xe.ui.xe.components.DialogXe
 import com.example.xe.ui.xe.components.LocationItemXe
 import com.example.xe.ui.xe.components.TextFieldXe
 import com.example.xe.ui.xe.components.TextViewXe
 import com.example.xe.ui.xe.components.trailingIconCheck
 import com.example.xe.utils.WindowType
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun XeScreen(
@@ -52,6 +55,16 @@ fun XeScreen(
     val spacing = LocalSpacing.current
     val context = LocalContext.current
     val focusRequester = remember { FocusRequester() }
+
+
+    if(state.isDialogShown){
+        DialogXe(
+            modifier = Modifier.testTag("Dialog"),
+            onDismissRequest = {onEvent(XeEvent.OnDialogDismissClicked)},
+            dialogTitle = "Success" ,
+            dialogText = state.jsonAdString ,
+        )
+    }
 
     LaunchedEffect(key1 = true){
         uiEventFlow.collect{
@@ -200,8 +213,28 @@ fun XeScreen(
                     singleLine = false
                     )
 
-                Spacer(modifier = Modifier.height(spacing.spaceMedium))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                ButtonXe(
+                    text = stringResource(R.string.submit),
+                    onClick = {
+                        onEvent(XeEvent.OnSubmitClicked)
 
+                    },
+                    color = GreenXE,
+                    windowType = windowType
+                )
+
+                ButtonXe(
+                    text = stringResource(R.string.clear),
+                    onClick = {onEvent(XeEvent.OnClearClicked)},
+                    color = Color.Red,
+                    windowType = windowType
+                )
+
+            }
 
 
 

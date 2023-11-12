@@ -15,7 +15,7 @@ fun TextViewXE(
     modifier : Modifier = Modifier,
     text : String,
     windowType : WindowType,
-    style: TextStyle = if(windowType == WindowType.Mobile) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleLarge
+    style: TextStyle = if(windowType == WindowType.Mobile) MaterialTheme.typography.titleMedium else MaterialTheme.typography.headlineSmall
 ) {
     Text(
         text = text,

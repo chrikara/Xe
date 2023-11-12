@@ -33,7 +33,7 @@ class XeViewModel @Inject constructor(
             }
             is XeEvent.OnChangePriceText -> {
                 state = state.copy(
-                    price = event.text
+                    price = filterDigits(event.text)
                 )
             }
             is XeEvent.OnChangeDescriptionText -> {

@@ -5,6 +5,8 @@ plugins {
     // Dagger Hilt
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+    id("de.mannodermaus.android-junit5") version "1.9.3.0"
+
 
 
 }
@@ -92,7 +94,10 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
 
-    // Test
+    // Test AssertK
     testImplementation("com.willowtreeapps.assertk:assertk:0.26.1")
-
+    androidTestImplementation("com.willowtreeapps.assertk:assertk:0.26.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
 }

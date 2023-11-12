@@ -8,12 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import com.example.xe.ui.theme.LocalSpacing
+import com.example.xe.utils.WindowType
 
 @Composable
 fun LocationItemXe(
     modifier : Modifier = Modifier,
     text : String,
-    onClick : () -> Unit
+    onClick : () -> Unit,
+    windowType: WindowType
 ) {
     val spacing = LocalSpacing.current
 
@@ -25,7 +27,7 @@ fun LocationItemXe(
 
         ,
         text = text,
-        style = MaterialTheme.typography.bodyLarge,
+        style = if(windowType == WindowType.Mobile) MaterialTheme.typography.bodyLarge else MaterialTheme.typography.titleLarge,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis
 

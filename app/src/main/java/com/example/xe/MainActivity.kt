@@ -24,7 +24,8 @@ class MainActivity : ComponentActivity() {
                 XeScreen(
                     state = viewModel.state,
                     windowType = device,
-                    onEvent = viewModel::onEvent
+                    onEvent = viewModel::onEvent,
+                    uiEventFlow = viewModel.uiEvent
                 )
 
             }

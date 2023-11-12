@@ -2,4 +2,6 @@
     <string name="app_name">Xe</string>
     <string name="new_property_classified">New Property Classified</string>
     <string name="title">Title</string>
+    <string name="price">Price</string>
+    <string name="description">Description</string>
 </resources>

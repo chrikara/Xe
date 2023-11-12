@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.platform.LocalConfiguration
 
 
-data class WindowWidth(
+data class WindowHeight(
     val type: WindowType,
 )
 
@@ -17,20 +17,20 @@ sealed class WindowType{
 }
 
 @Composable
-fun rememberWindowSize(): WindowWidth {
+fun rememberWindowSize(): WindowHeight {
     val configuration = LocalConfiguration.current
-    val screenWidth by remember(key1 = configuration) {
-        mutableIntStateOf(configuration.screenWidthDp)
-
+    val screenHeight by remember(key1 = configuration) {
+        mutableIntStateOf(configuration.screenHeightDp)
     }
+    println(screenHeight)
 
-    return WindowWidth(
-        type = getScreenWidth(screenWidth),
+    return WindowHeight(
+        type = getScreenHeight(screenHeight),
     )
 }
 
-fun getScreenWidth(width: Int): WindowType = when {
-    width < 600 -> WindowType.Mobile
+fun getScreenHeight(height: Int): WindowType = when {
+    height < 720 -> WindowType.Mobile
     else -> WindowType.Expanded
 }
 

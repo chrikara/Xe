@@ -5,6 +5,7 @@ import com.example.xe.data.XeApi
 import com.example.xe.data.XeRepositoryImpl
 import com.example.xe.domain.XeRepository
 import com.example.xe.domain.usecase.FilterDigits
+import com.example.xe.domain.usecase.ValidateInputs
 import com.example.xe.utils.BASE_URL
 import com.example.xe.utils.hasInternet
 import dagger.Module
@@ -64,6 +65,10 @@ object Module {
     @Provides
     @Singleton
     fun providesFilterDigits() = FilterDigits()
+
+    @Provides
+    @Singleton
+    fun providesValidateInputs() = ValidateInputs()
 
 
 

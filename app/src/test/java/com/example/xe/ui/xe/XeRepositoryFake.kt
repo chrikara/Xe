@@ -5,7 +5,7 @@ import com.example.xe.domain.model.SearchDto
 
 class XeRepositoryFake : XeRepository {
 
-    val searchItems = listOf(
+    val items = listOf(
         SearchDto(
             mainText = "Nafplio",
             placeId = "123cekjeoe123:1",
@@ -23,7 +23,7 @@ class XeRepositoryFake : XeRepository {
         return if(hasError){
             Result.failure(Throwable())
         }else{
-            Result.success(searchItems)
+            Result.success(items)
         }
 
 

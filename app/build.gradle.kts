@@ -5,7 +5,10 @@ plugins {
     // Dagger Hilt
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20"
     id("de.mannodermaus.android-junit5") version "1.9.3.0"
+
 
 
 
@@ -22,7 +25,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.xe.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -75,8 +78,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-
-
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
     ksp("com.google.dagger:hilt-compiler:2.48.1")
@@ -93,14 +94,39 @@ dependencies {
     // Logging interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
+    // Serializable
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
-    // Test AssertK
+// Test
     testImplementation("com.willowtreeapps.assertk:assertk:0.26.1")
     androidTestImplementation("com.willowtreeapps.assertk:assertk:0.26.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
 
+    testImplementation("io.mockk:mockk:1.12.5")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+
+
+    // Android test
+    androidTestImplementation("io.mockk:mockk-android:1.12.5")
+
     //MockWebServer
     testImplementation("com.squareup.okhttp3:mockwebserver:4.11.0")
+
+    //Android Coroutines Test
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+
+
+    // For instrumented tests.
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
+    // ...with Kotlin.
+    kspAndroidTest("com.google.dagger:hilt-android-compiler:2.48.1")
+
+    //Create Compose Rule
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.3")
+
+
+
+
 }

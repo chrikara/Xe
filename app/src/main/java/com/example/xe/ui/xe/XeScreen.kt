@@ -1,5 +1,6 @@
 package com.example.xe.ui.xe
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +18,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,12 +37,15 @@ import com.example.xe.ui.xe.components.TextFieldXe
 import com.example.xe.ui.xe.components.TextViewXe
 import com.example.xe.ui.xe.components.trailingIconCheck
 import com.example.xe.utils.WindowType
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun XeScreen(
     windowType : WindowType,
     onEvent: (XeEvent) -> Unit,
-    state : XeState
+    state : XeState,
+    uiEventFlow : Flow<XeViewModel.UiEvent>
 ) {
 
 
@@ -48,6 +53,15 @@ fun XeScreen(
     val context = LocalContext.current
     val focusRequester = remember { FocusRequester() }
 
+    LaunchedEffect(key1 = true){
+        uiEventFlow.collect{
+            when(it) {
+                is XeViewModel.UiEvent.ShowToast -> {
+                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     LazyColumn(
         modifier = Modifier
@@ -103,22 +117,22 @@ fun XeScreen(
 
                 LazyColumn(
                     modifier = Modifier
-                        .height(150.dp)
+                        .height(if (windowType == WindowType.Mobile) 150.dp else 250.dp)
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(5.dp))
                         .background(MaterialTheme.colorScheme.onSurface),
 
                     ){
                     items(state.listFromApi){
-                          LocationItemXe(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .focusable()
-                                .testTag("LocationItem"),
-                            text = "${it.mainText}, ${it.secondaryText}",
-                            onClick = {
+                        LocationItemXe(
+                              modifier = Modifier
+                                  .fillMaxWidth()
+                                  .focusable()
+                                  .testTag("LocationItem"),
+                              windowType = windowType,
+                              text = "${it.mainText}, ${it.secondaryText}",
+                              onClick = {onEvent(XeEvent.OnLocationItemClicked(it))}
 
-                            }
                         )
                     }
                 }
@@ -146,7 +160,7 @@ fun XeScreen(
                 Spacer(modifier = Modifier.height(spacing.spaceSmall))
 
                 TextViewXe(
-                    text = "Price",
+                    text = stringResource(R.string.price),
                     modifier = Modifier.fillMaxWidth(),
                     windowType = windowType
                 )
@@ -155,7 +169,9 @@ fun XeScreen(
 
                 TextFieldXe(
                     value = state.price,
-                    modifier = Modifier.fillMaxWidth().testTag("Price"),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("Price"),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number
                     ),
@@ -166,7 +182,7 @@ fun XeScreen(
                 Spacer(modifier = Modifier.height(spacing.spaceSmall))
 
                 TextViewXe(
-                    text = "Description",
+                    text = stringResource(R.string.description),
                     modifier = Modifier.fillMaxWidth(),
                     windowType = windowType,
                     )
@@ -175,9 +191,11 @@ fun XeScreen(
 
                 TextFieldXe(
                     value = state.description,
-                    modifier = Modifier.fillMaxWidth().testTag("Description"),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("Description"),
                     onValueChange = {onEvent(XeEvent.OnChangeDescriptionText(it))},
-                    minLines = 3,
+                    minLines = if(windowType == WindowType.Mobile) 3 else 6,
                     windowType = windowType,
                     singleLine = false
                     )
@@ -190,12 +208,4 @@ fun XeScreen(
         }
 
     }
-
-
-
-
-
-
-
-
 }

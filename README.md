@@ -20,9 +20,9 @@ The Ad Generator application, named "Xrusi Eukairia," is a mobile and tablet-fri
 
 - **Use Cases:** Complex logic is encapsulated in use cases, injected into the ViewModel which is primarily responsible for managing the UI's state.
 
-- **Unit Testing:** JUnit5 and MockWebserver are employed (along with a fake test double for the repository) for unit testing the ViewModel, Use Cases and API.
+- **Unit Testing:** JUnit5 and MockWebserver are employed (along with a fake test double for the repository) for unit and integrated testing the ViewModel, Use Cases and API.
 
-- **Instrumented Testing:** JUnit4 is utilized for comprehensive end-to-end testing of the entire app.
+- **Instrumented Testing:** Compose testing framework is utilized (and a little Espresso) for UI and end-to-end testing of the entire screen.
 
 
 ### End-to-End (E2E) Testing Video
